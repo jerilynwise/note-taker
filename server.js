@@ -7,6 +7,7 @@ const app = express();
 
 // pathway needed to hold the notes database
 const { notes } = require('./db/db.json');
+const { application } = require('express');
 
 // port to run through Heroku
 const PORT = process.env.PORT || 3001;
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 3001;
 //parse incoming data and allow app to accept 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+app.use(express.static('public'));
 
 //function to get existing notes
 function findNoteId(id, notesArray) {
@@ -65,6 +67,16 @@ app.post('api/notes', (req,res) => {
     }
 });
 
+//get the html files to be served from the express.js server
+app.get('/', (req,res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+app.get('/notes', (req,res) => {
+    res.sendFile(path.join(__dirname, './public/notes.html'));
+});
+app.get('*', (req,res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
 
 
 // makes the server listen
