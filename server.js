@@ -1,5 +1,7 @@
 // required packages
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 // calls the server
 const app = express();
 
@@ -25,4 +27,4 @@ app.get("/api/notes", (req,res) => {
 // makes the server listen
 app.listen(PORT, () => {
     console.log (`API is now on port ${PORT}!`)
-})
+});
